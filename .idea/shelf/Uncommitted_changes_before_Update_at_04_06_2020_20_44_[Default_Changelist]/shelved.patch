@@ -1,0 +1,788 @@
+Index: src/main/java/mandatory/test/Game.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package mandatory.test;\r\n\r\nimport java.util.HashMap;\r\nimport java.util.Random;\r\nimport java.util.regex.Matcher;\r\nimport java.util.regex.Pattern;\r\n\r\npublic class Game {\r\n\r\n\r\n    public int playerAmount;\r\n\r\n\r\n    public int diceRollNumber;\r\n    public int startLife;\r\n    public int life;\r\n    public String name;\r\n    public HashMap<String, Integer> playerLife = new HashMap<String, Integer>();\r\n    public HashMap<String, String> playerNames = new HashMap<String, String>();\r\n\r\n    public Game(HashMap<String, Integer> playerLife) {\r\n        this.playerLife = playerLife;\r\n    }\r\n\r\n    public void setPlayerLife(HashMap<String, Integer> playerLife) {\r\n        this.playerLife = playerLife;\r\n    }\r\n\r\n    public void setPlayerNames(HashMap<String, String> playerNames) {\r\n        this.playerNames = playerNames;\r\n    }\r\n\r\n    public HashMap<String, String> getPlayerNames() {\r\n        return playerNames;\r\n    }\r\n\r\n    public int getLife() {\r\n        return life;\r\n    }\r\n\r\n    public void setStartLife(int startLife){\r\n        this.startLife = startLife;\r\n    }\r\n\r\n    public HashMap<String, Integer> getPlayerLife() {\r\n        return playerLife;\r\n    }\r\n\r\n    public void setLife(int life) {\r\n        this.life = life;\r\n    }\r\n\r\n    public void setDiceRollNumber(int diceRollNumber) {\r\n        this.diceRollNumber = diceRollNumber;\r\n    }\r\n\r\n    public void setName(String name) {\r\n        this.name = name;\r\n    }\r\n\r\n    public void setPlayerAmount(int playerAmount) {\r\n        this.playerAmount = playerAmount;\r\n    }\r\n\r\n    public int getPlayerAmount() {\r\n        return playerAmount;\r\n    }\r\n\r\n\r\n\r\n    public Game() {\r\n    }\r\n\r\n    public int addPlayers(int playerInput){\r\n\r\n        if(playerInput <= 6 && playerInput >= 2){\r\n\r\n            for (int i = 0; i < playerInput; i++) {\r\n                playerLife.put(\"Player \" + (i + 1), getLife());\r\n                playerNames.put(\"Player \" + (i + 1), \"Player \" + (i + 1));\r\n            }\r\n        }\r\n        else {\r\n            IllegalArgumentException exception = new IllegalArgumentException(\"Maximum amount of players is 6\");\r\n            System.out.println(\"Maximum amount of players is 6\");\r\n            throw exception;\r\n        }\r\n\r\n        setPlayerAmount(playerInput);\r\n        System.out.println(playerInput + \" players added\");\r\n        System.out.println(getPlayerLife());\r\n        return playerInput;\r\n    }\r\n\r\n\r\n\r\n    public int addStartLife(int lifeInput){\r\n\r\n        if(lifeInput <= 100 && lifeInput > 0){\r\n            setLife(lifeInput);\r\n            setStartLife(lifeInput);\r\n        }\r\n        else{\r\n            IllegalArgumentException exception = new IllegalArgumentException(\"Please select a start life between 1-100\");\r\n            throw exception;\r\n        }\r\n        System.out.println(\"Start life set to: \" + life);\r\n        return lifeInput;\r\n    }\r\n\r\n    public String addName(String player, String name){\r\n\r\n        //pattern to find if there is any special character in string\r\n        Pattern regex = Pattern.compile(\"[^a-zA-Z0-9 ]\");\r\n        //matcher to find if there is any special character in string\r\n        Matcher matcher = regex.matcher(name);\r\n\r\n        if(name.length() <= 16 && name.length() != 0 && !matcher.find()) {\r\n            for(String key : getPlayerNames().keySet()) {\r\n                if (key.equals(player)) {\r\n                    playerNames.put(key, name);\r\n                    System.out.println(\"added name: \"+ name +\", to: \" + player);\r\n                    setName(name);\r\n                }\r\n            }\r\n\r\n        } else if (name.length() > 16){\r\n            IllegalArgumentException exception = new IllegalArgumentException(\"The name is too long - please choose a shorter one\");\r\n            System.out.println(\"The name is too long - please choose a shorter one\");\r\n            throw exception;\r\n        } else if (name.length() == 0){\r\n            IllegalArgumentException exception = new IllegalArgumentException(\"Name should consist of at least 1 character\");\r\n            System.out.println(\"Name should consist of at least 1 character\");\r\n            throw exception;\r\n        } else {\r\n            IllegalArgumentException exception = new IllegalArgumentException(\"The name can't contain numbers and special characters - please choose another\");\r\n            System.out.println(\"The name can't contain numbers and special characters - please choose another\");\r\n            throw exception;\r\n        }\r\n\r\n        System.out.println(\"added name: \" + name + \", to \" + player);\r\n//        System.out.println(playerNames);\r\n        return name;\r\n    }\r\n\r\n\r\n\r\n    public int addLife(String player) {\r\n//\r\n//        game1.playerLife.put(\"Player 1\", 0);\r\n//        game1.playerLife.put(\"Player 2\", 500);\r\n//        game1.playerLife.put(\"Player 3\", 600);\r\n\r\n        for(String key : getPlayerLife().keySet()) {\r\n\r\n            if (key.equals(player)) {\r\n\r\n                if(playerLife.get(key) + 1 > 500){\r\n                    IllegalArgumentException exception = new IllegalArgumentException(\"Life can't go above 500!\");\r\n                    System.out.println(\"Life can't go above 500!\");\r\n                    throw exception;\r\n                }\r\n                if(playerLife.get(key) == 0){\r\n                    IllegalArgumentException exception = new IllegalArgumentException(\"Player has lost, and can't play anymore\");\r\n                    System.out.println(\"Player has lost, and can't play anymore\");\r\n                    throw exception;\r\n                }else{\r\n                    playerLife.put(key, playerLife.get(key) + 1);\r\n                    System.out.println(\"added life to \" + player);\r\n                    setLife(playerLife.get(key));\r\n\r\n                }\r\n            }\r\n        }\r\n        System.out.println(playerLife);\r\n        System.out.println(player + \": \" + life);\r\n        return life;\r\n    }\r\n\r\n    public int removeLife(String player) {\r\n\r\n        for(String key : getPlayerLife().keySet()) {\r\n\r\n            if (key.equals(player)) {\r\n\r\n                if(playerLife.get(key) - 1 < 0){\r\n                    IllegalArgumentException exception = new IllegalArgumentException(\"Life can't go below 0!\");\r\n                    System.out.println(\"Life can't go below 0!\");\r\n                    throw exception;\r\n                }\r\n\r\n                else {\r\n\r\n                    playerLife.put(key, playerLife.get(key) -1);\r\n                    System.out.println(\"removed life from \" + player);\r\n                    setLife(playerLife.get(key));\r\n                }\r\n            }\r\n        }\r\n\r\n        System.out.println(playerLife);\r\n        System.out.println(player + \": \" + life);\r\n        return life;\r\n    }\r\n\r\n    public int resetLife(){\r\n        life = startLife;\r\n\r\n        for(String key : getPlayerLife().keySet()) {\r\n            playerLife.put(key, life);\r\n        }\r\n        System.out.println(playerLife);\r\n        System.out.println(\"Life reset to start\");\r\n        return life;\r\n    }\r\n\r\n    public int rollDice(int playerAmount){\r\n\r\n        Random random = new Random();\r\n        int min = 1;\r\n        int max = playerAmount;\r\n        int diceRoll = random.nextInt((max - min) + 1) + min;\r\n\r\n        System.out.println(\"Rolled dice: \" + diceRoll);\r\n\r\n        return diceRoll;\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/mandatory/test/Game.java	(revision 384a8367a6eeac859ebb975399391b6855b2ed53)
++++ src/main/java/mandatory/test/Game.java	(date 1590765379122)
+@@ -1,7 +1,6 @@
+ package mandatory.test;
+ 
+ import java.util.HashMap;
+-import java.util.Random;
+ import java.util.regex.Matcher;
+ import java.util.regex.Pattern;
+ 
+@@ -73,7 +72,7 @@
+ 
+     public int addPlayers(int playerInput){
+ 
+-        if(playerInput <= 6 && playerInput >= 2){
++        if(playerInput <= 6 && playerInput > 0){
+ 
+             for (int i = 0; i < playerInput; i++) {
+                 playerLife.put("Player " + (i + 1), getLife());
+@@ -111,7 +110,7 @@
+     public String addName(String player, String name){
+ 
+         //pattern to find if there is any special character in string
+-        Pattern regex = Pattern.compile("[^a-zA-Z0-9 ]");
++        Pattern regex = Pattern.compile("[^a-zA-Z]");
+         //matcher to find if there is any special character in string
+         Matcher matcher = regex.matcher(name);
+ 
+@@ -146,30 +145,17 @@
+ 
+ 
+     public int addLife(String player) {
+-//
+-//        game1.playerLife.put("Player 1", 0);
+-//        game1.playerLife.put("Player 2", 500);
+-//        game1.playerLife.put("Player 3", 600);
+ 
+         for(String key : getPlayerLife().keySet()) {
+-
+-            if (key.equals(player)) {
+-
+-                if(playerLife.get(key) + 1 > 500){
+-                    IllegalArgumentException exception = new IllegalArgumentException("Life can't go above 500!");
+-                    System.out.println("Life can't go above 500!");
+-                    throw exception;
+-                }
+-                if(playerLife.get(key) == 0){
+-                    IllegalArgumentException exception = new IllegalArgumentException("Player has lost, and can't play anymore");
+-                    System.out.println("Player has lost, and can't play anymore");
+-                    throw exception;
+-                }else{
+-                    playerLife.put(key, playerLife.get(key) + 1);
+-                    System.out.println("added life to " + player);
+-                    setLife(playerLife.get(key));
+-
+-                }
++            if(playerLife.get(key) + 1 > 500){
++                IllegalArgumentException exception = new IllegalArgumentException("Life can't go above 500!");
++                System.out.println("Life can't go above 500!");
++                throw exception;
++            }
++            if (key.equals(player)) {
++                playerLife.put(key, playerLife.get(key) + 1);
++                System.out.println("added life to " + player);
++                setLife(playerLife.get(key));
+             }
+         }
+         System.out.println(playerLife);
+@@ -180,21 +166,16 @@
+     public int removeLife(String player) {
+ 
+         for(String key : getPlayerLife().keySet()) {
+-
+-            if (key.equals(player)) {
+-
+-                if(playerLife.get(key) - 1 < 0){
+-                    IllegalArgumentException exception = new IllegalArgumentException("Life can't go below 0!");
+-                    System.out.println("Life can't go below 0!");
+-                    throw exception;
+-                }
+-
+-                else {
+-
+-                    playerLife.put(key, playerLife.get(key) -1);
+-                    System.out.println("removed life from " + player);
+-                    setLife(playerLife.get(key));
+-                }
++            if(playerLife.get(key) - 1 < 0){
++                IllegalArgumentException exception = new IllegalArgumentException("Life can't go below 0!");
++                System.out.println("Life can't go below 0!");
++                throw exception;
++            }
++            if (key.equals(player)) {
++                playerLife.put(key, playerLife.get(key) -1);
++                System.out.println("removed life from " + player);
++                setLife(playerLife.get(key));
++
+             }
+         }
+ 
+@@ -214,16 +195,14 @@
+         return life;
+     }
+ 
+-    public int rollDice(int playerAmount){
+-
+-        Random random = new Random();
+-        int min = 1;
+-        int max = playerAmount;
+-        int diceRoll = random.nextInt((max - min) + 1) + min;
+-
+-        System.out.println("Rolled dice: " + diceRoll);
++    public int rollDice(int diceNumber){
+ 
+-        return diceRoll;
++        if (diceNumber >= 1 && diceNumber <= playerAmount){
++            setDiceRollNumber(diceNumber);
++            System.out.println("Dice is within range");
++        }
++        return diceRollNumber;
+     }
++
+ 
+ }
+Index: .idea/encodings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"Encoding\" addBOMForNewFiles=\"with NO BOM\">\r\n    <file url=\"file://$PROJECT_DIR$\" charset=\"UTF-8\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/encodings.xml	(revision 384a8367a6eeac859ebb975399391b6855b2ed53)
++++ .idea/encodings.xml	(date 1590765379211)
+@@ -1,6 +1,7 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="Encoding" addBOMForNewFiles="with NO BOM">
++  <component name="Encoding">
+     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
++    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: target/classes/templates/home.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <title>Life Counter</title>\r\n    <script src=\"https://code.jquery.com/jquery-3.3.1.js\" type=\"text/javascript\"></script>\r\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"css/home.css\" />\r\n</head>\r\n<body>\r\n<!--<ul>-->\r\n    <!--<li><img src=\"/img/life_counter.png\" height=\"70\"/></li>-->\r\n<!--</ul>-->\r\n<div class=\"topnav\">\r\n    <img src=\"/img/life_counter.png\" height=\"70\"/>\r\n</div>\r\n<br>\r\n<br>\r\n<br>\r\n<br>\r\n<br>\r\n<br>\r\n<br>\r\n<br>\r\n<br>\r\n<br>\r\n<br>\r\n<div class=\"blackBox\">\r\n<div class=\"content\">\r\n    <label id=\"choosePlayer\" for=\"players\">PLAYERS</label><br>\r\n    <select name=\"play\" id=\"players\">\r\n        <option value=\"2\">2</option>\r\n        <option value=\"3\">3</option>\r\n        <option value=\"4\">4</option>\r\n        <option value=\"5\">5</option>\r\n        <option value=\"6\">6</option>\r\n    </select>\r\n    <!--<input type=\"number\" id=\"players\" max=\"10\" min=\"0\">-->\r\n    <br>\r\n    <br>\r\n    <br>\r\n    <br>\r\n    <br>\r\n    <label for=\"lifePoint\">START LIFE</label><br>\r\n    <input style=\"text-align: center; padding-left: 0px;\" type=\"number\" id=\"lifePoint\" placeholder=\"1-100\">\r\n    <br>\r\n    <br>\r\n    <br>\r\n    <br>\r\n    <br>\r\n    <div class=\"center\">\r\n        <button type=\"button\" id=\"startButton\" class=\"button\">START</button>\r\n    </div>\r\n</div>\r\n\r\n</div>\r\n\r\n</body>\r\n<script>\r\n\r\n    // onclick=\"saveLife(); location.href='/game'\"\r\n\r\n    $( document ).ready(function() {\r\n\r\n        $(\"#startButton\").click(function() {\r\n\r\n            if ($(\"#lifePoint\").val() > 100) {\r\n                alert(\"Invalid start life\\nPlease choose a number between 1-100\");\r\n                // window.location = \"/game\"\r\n                throw \"life cannnot be over 100\"\r\n            }\r\n\r\n            if ($(\"#lifePoint\").val() < 1) {\r\n                alert(\"Invalid start life\\nPlease choose a number between 1-100\");\r\n                throw \"life cannnot be under 1\"\r\n            }\r\n\r\n            if($(\"#lifePoint\").val() < 101 && $(\"#lifePoint\").val() > 0) {\r\n                saveLife();\r\n            }\r\n        })\r\n    });\r\n\r\n\r\n    function saveLife(){\r\n        var lifeInput = document.getElementById(\"lifePoint\").value;\r\n        // Store\r\n        localStorage.setItem(\"lifeOutput\", lifeInput);\r\n        var lifeInt = parseInt(document.getElementById(\"lifePoint\").value);\r\n\r\n        if($(\"#lifePoint\").val() < 101 && $(\"#lifePoint\").val() > 0) {\r\n\r\n\r\n            $.ajax({\r\n                type: 'POST',\r\n                url: '/add-StartLife',\r\n                data: {'life': lifeInt},\r\n                dataType: 'json',\r\n                success: function (data) {\r\n                    console.log(\"Start Life saved \" + data);\r\n                }\r\n            });\r\n\r\n            $(this).delay(400).queue(function() {\r\n\r\n                savePlayer();\r\n\r\n                window.location = \"/game\";\r\n\r\n                $(this).dequeue();\r\n\r\n            });\r\n\r\n\r\n        }\r\n        else{\r\n            throw \"life cannnot be over 100\"\r\n\r\n        }\r\n\r\n\r\n\r\n\r\n    }\r\n\r\n    function savePlayer(){\r\n        var playerInput = document.getElementById(\"players\").value;\r\n        // Store\r\n        localStorage.setItem(\"Players\", playerInput);\r\n        var playerInt = parseInt(document.getElementById(\"players\").value);\r\n\r\n        $.ajax({\r\n            type: 'POST',\r\n            url: '/add-Players',\r\n            data: {'players': playerInt},\r\n            dataType: 'json',\r\n            success: function (data) {\r\n                console.log(\"Players added \" + data);\r\n            }\r\n        });\r\n\r\n    }\r\n\r\n\r\n</script>\r\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- target/classes/templates/home.html	(revision 384a8367a6eeac859ebb975399391b6855b2ed53)
++++ target/classes/templates/home.html	(date 1590765379155)
+@@ -26,7 +26,7 @@
+ <br>
+ <div class="blackBox">
+ <div class="content">
+-    <label id="choosePlayer" for="players">PLAYERS</label><br>
++    <label for="players">PLAYERS</label><br>
+     <select name="play" id="players">
+         <option value="2">2</option>
+         <option value="3">3</option>
+@@ -64,19 +64,21 @@
+         $("#startButton").click(function() {
+ 
+             if ($("#lifePoint").val() > 100) {
+-                alert("Invalid start life\nPlease choose a number between 1-100");
++                alert("The maximum amount of start life is 100.\n Please choose a smaller number.");
+                 // window.location = "/game"
+                 throw "life cannnot be over 100"
+             }
+ 
+             if ($("#lifePoint").val() < 1) {
+-                alert("Invalid start life\nPlease choose a number between 1-100");
++                alert("The minimum amount of start life is 1.\n Please choose a larger number.");
+                 throw "life cannnot be under 1"
+             }
+ 
+             if($("#lifePoint").val() < 101 && $("#lifePoint").val() > 0) {
+                 saveLife();
++
+             }
++
+         })
+     });
+ 
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"MavenProjectsManager\">\r\n    <option name=\"originalFiles\">\r\n      <list>\r\n        <option value=\"$PROJECT_DIR$/pom.xml\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_12\" project-jdk-name=\"12\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/classes\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(revision 384a8367a6eeac859ebb975399391b6855b2ed53)
++++ .idea/misc.xml	(date 1590765379182)
+@@ -7,7 +7,7 @@
+       </list>
+     </option>
+   </component>
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_12" project-jdk-name="12" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_14" default="false" project-jdk-name="14" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/classes" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: src/main/resources/templates/home.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <title>Life Counter</title>\r\n    <script src=\"https://code.jquery.com/jquery-3.3.1.js\" type=\"text/javascript\"></script>\r\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"css/home.css\" />\r\n</head>\r\n<body>\r\n<!--<ul>-->\r\n    <!--<li><img src=\"/img/life_counter.png\" height=\"70\"/></li>-->\r\n<!--</ul>-->\r\n<div class=\"topnav\">\r\n    <img src=\"/img/life_counter.png\" height=\"70\"/>\r\n</div>\r\n<br>\r\n<br>\r\n<br>\r\n<br>\r\n<br>\r\n<br>\r\n<br>\r\n<br>\r\n<br>\r\n<br>\r\n<br>\r\n<div class=\"blackBox\">\r\n<div class=\"content\">\r\n    <label id=\"choosePlayer\" for=\"players\">PLAYERS</label><br>\r\n    <select name=\"play\" id=\"players\">\r\n        <option value=\"2\">2</option>\r\n        <option value=\"3\">3</option>\r\n        <option value=\"4\">4</option>\r\n        <option value=\"5\">5</option>\r\n        <option value=\"6\">6</option>\r\n    </select>\r\n    <!--<input type=\"number\" id=\"players\" max=\"10\" min=\"0\">-->\r\n    <br>\r\n    <br>\r\n    <br>\r\n    <br>\r\n    <br>\r\n    <label for=\"lifePoint\">START LIFE</label><br>\r\n    <input style=\"text-align: center; padding-left: 0px;\" type=\"number\" id=\"lifePoint\" placeholder=\"1-100\">\r\n    <br>\r\n    <br>\r\n    <br>\r\n    <br>\r\n    <br>\r\n    <div class=\"center\">\r\n        <button type=\"button\" id=\"startButton\" class=\"button\">START</button>\r\n    </div>\r\n</div>\r\n\r\n</div>\r\n\r\n</body>\r\n<script>\r\n\r\n    // onclick=\"saveLife(); location.href='/game'\"\r\n\r\n    $( document ).ready(function() {\r\n\r\n        $(\"#startButton\").click(function() {\r\n\r\n            if ($(\"#lifePoint\").val() > 100) {\r\n                alert(\"Invalid start life\\nPlease choose a number between 1-100\");\r\n                // window.location = \"/game\"\r\n                throw \"life cannnot be over 100\"\r\n            }\r\n\r\n            if ($(\"#lifePoint\").val() < 1) {\r\n                alert(\"Invalid start life\\nPlease choose a number between 1-100\");\r\n                throw \"life cannnot be under 1\"\r\n            }\r\n\r\n            if($(\"#lifePoint\").val() < 101 && $(\"#lifePoint\").val() > 0) {\r\n                saveLife();\r\n            }\r\n        })\r\n    });\r\n\r\n\r\n    function saveLife(){\r\n        var lifeInput = document.getElementById(\"lifePoint\").value;\r\n        // Store\r\n        localStorage.setItem(\"lifeOutput\", lifeInput);\r\n        var lifeInt = parseInt(document.getElementById(\"lifePoint\").value);\r\n\r\n        if($(\"#lifePoint\").val() < 101 && $(\"#lifePoint\").val() > 0) {\r\n\r\n\r\n            $.ajax({\r\n                type: 'POST',\r\n                url: '/add-StartLife',\r\n                data: {'life': lifeInt},\r\n                dataType: 'json',\r\n                success: function (data) {\r\n                    console.log(\"Start Life saved \" + data);\r\n                }\r\n            });\r\n\r\n            $(this).delay(400).queue(function() {\r\n\r\n                savePlayer();\r\n\r\n                window.location = \"/game\";\r\n\r\n                $(this).dequeue();\r\n\r\n            });\r\n\r\n\r\n        }\r\n        else{\r\n            throw \"life cannnot be over 100\"\r\n\r\n        }\r\n\r\n\r\n\r\n\r\n    }\r\n\r\n    function savePlayer(){\r\n        var playerInput = document.getElementById(\"players\").value;\r\n        // Store\r\n        localStorage.setItem(\"Players\", playerInput);\r\n        var playerInt = parseInt(document.getElementById(\"players\").value);\r\n\r\n        $.ajax({\r\n            type: 'POST',\r\n            url: '/add-Players',\r\n            data: {'players': playerInt},\r\n            dataType: 'json',\r\n            success: function (data) {\r\n                console.log(\"Players added \" + data);\r\n            }\r\n        });\r\n\r\n    }\r\n\r\n\r\n</script>\r\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/resources/templates/home.html	(revision 384a8367a6eeac859ebb975399391b6855b2ed53)
++++ src/main/resources/templates/home.html	(date 1590765379260)
+@@ -26,7 +26,7 @@
+ <br>
+ <div class="blackBox">
+ <div class="content">
+-    <label id="choosePlayer" for="players">PLAYERS</label><br>
++    <label for="players">PLAYERS</label><br>
+     <select name="play" id="players">
+         <option value="2">2</option>
+         <option value="3">3</option>
+@@ -64,19 +64,21 @@
+         $("#startButton").click(function() {
+ 
+             if ($("#lifePoint").val() > 100) {
+-                alert("Invalid start life\nPlease choose a number between 1-100");
++                alert("The maximum amount of start life is 100.\n Please choose a smaller number.");
+                 // window.location = "/game"
+                 throw "life cannnot be over 100"
+             }
+ 
+             if ($("#lifePoint").val() < 1) {
+-                alert("Invalid start life\nPlease choose a number between 1-100");
++                alert("The minimum amount of start life is 1.\n Please choose a larger number.");
+                 throw "life cannnot be under 1"
+             }
+ 
+             if($("#lifePoint").val() < 101 && $("#lifePoint").val() > 0) {
+                 saveLife();
++
+             }
++
+         })
+     });
+ 
+Index: test.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule=\"true\" type=\"JAVA_MODULE\" version=\"4\">\r\n  <component name=\"FacetManager\">\r\n    <facet type=\"Spring\" name=\"Spring\">\r\n      <configuration />\r\n    </facet>\r\n    <facet type=\"web\" name=\"Web\">\r\n      <configuration>\r\n        <webroots />\r\n        <sourceRoots>\r\n          <root url=\"file://$MODULE_DIR$/src/main/java\" />\r\n          <root url=\"file://$MODULE_DIR$/src/main/resources\" />\r\n        </sourceRoots>\r\n      </configuration>\r\n    </facet>\r\n  </component>\r\n  <component name=\"NewModuleRootManager\" LANGUAGE_LEVEL=\"JDK_1_8\">\r\n    <output url=\"file://$MODULE_DIR$/target/classes\" />\r\n    <output-test url=\"file://$MODULE_DIR$/target/test-classes\" />\r\n    <content url=\"file://$MODULE_DIR$\">\r\n      <sourceFolder url=\"file://$MODULE_DIR$/src/main/java\" isTestSource=\"false\" />\r\n      <sourceFolder url=\"file://$MODULE_DIR$/src/main/resources\" type=\"java-resource\" />\r\n      <sourceFolder url=\"file://$MODULE_DIR$/src/test/java\" isTestSource=\"true\" />\r\n      <excludeFolder url=\"file://$MODULE_DIR$/target\" />\r\n    </content>\r\n    <orderEntry type=\"inheritedJdk\" />\r\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.seleniumhq.selenium:selenium-java:3.141.59\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.seleniumhq.selenium:selenium-api:3.141.59\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.seleniumhq.selenium:selenium-chrome-driver:3.141.59\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.seleniumhq.selenium:selenium-edge-driver:3.141.59\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.seleniumhq.selenium:selenium-firefox-driver:3.141.59\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.seleniumhq.selenium:selenium-ie-driver:3.141.59\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.seleniumhq.selenium:selenium-opera-driver:3.141.59\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.seleniumhq.selenium:selenium-remote-driver:3.141.59\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.seleniumhq.selenium:selenium-safari-driver:3.141.59\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.seleniumhq.selenium:selenium-support:3.141.59\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: net.bytebuddy:byte-buddy:1.10.8\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.apache.commons:commons-exec:1.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: com.google.guava:guava:25.0-jre\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: com.google.code.findbugs:jsr305:1.3.9\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.checkerframework:checker-compat-qual:2.0.0\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: com.google.errorprone:error_prone_annotations:2.1.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: com.google.j2objc:j2objc-annotations:1.1\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.codehaus.mojo:animal-sniffer-annotations:1.14\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: com.squareup.okhttp3:okhttp:3.14.7\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: com.squareup.okio:okio:1.14.0\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.springframework.boot:spring-boot-starter-thymeleaf:2.2.6.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.springframework.boot:spring-boot-starter:2.2.6.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.springframework.boot:spring-boot:2.2.6.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.springframework.boot:spring-boot-autoconfigure:2.2.6.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.springframework.boot:spring-boot-starter-logging:2.2.6.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: ch.qos.logback:logback-classic:1.2.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: ch.qos.logback:logback-core:1.2.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.apache.logging.log4j:log4j-to-slf4j:2.12.1\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.apache.logging.log4j:log4j-api:2.12.1\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.slf4j:jul-to-slf4j:1.7.30\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: jakarta.annotation:jakarta.annotation-api:1.3.5\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"RUNTIME\" name=\"Maven: org.yaml:snakeyaml:1.25\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.thymeleaf:thymeleaf-spring5:3.0.11.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.thymeleaf:thymeleaf:3.0.11.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.attoparser:attoparser:2.0.5.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.unbescape:unbescape:1.1.6.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.slf4j:slf4j-api:1.7.30\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.thymeleaf.extras:thymeleaf-extras-java8time:3.0.4.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.springframework.boot:spring-boot-starter-web:2.2.6.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.springframework.boot:spring-boot-starter-json:2.2.6.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: com.fasterxml.jackson.core:jackson-databind:2.10.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: com.fasterxml.jackson.core:jackson-annotations:2.10.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: com.fasterxml.jackson.core:jackson-core:2.10.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.10.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: com.fasterxml.jackson.module:jackson-module-parameter-names:2.10.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.springframework.boot:spring-boot-starter-tomcat:2.2.6.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.apache.tomcat.embed:tomcat-embed-core:9.0.33\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.apache.tomcat.embed:tomcat-embed-el:9.0.33\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.apache.tomcat.embed:tomcat-embed-websocket:9.0.33\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.springframework.boot:spring-boot-starter-validation:2.2.6.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: jakarta.validation:jakarta.validation-api:2.0.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.hibernate.validator:hibernate-validator:6.0.18.Final\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.jboss.logging:jboss-logging:3.4.1.Final\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: com.fasterxml:classmate:1.5.1\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.springframework:spring-web:5.2.5.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.springframework:spring-beans:5.2.5.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.springframework:spring-webmvc:5.2.5.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.springframework:spring-aop:5.2.5.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.springframework:spring-context:5.2.5.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.springframework:spring-expression:5.2.5.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.springframework.boot:spring-boot-starter-test:2.2.6.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.springframework.boot:spring-boot-test:2.2.6.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.springframework.boot:spring-boot-test-autoconfigure:2.2.6.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: com.jayway.jsonpath:json-path:2.4.0\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: net.minidev:json-smart:2.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: net.minidev:accessors-smart:1.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.ow2.asm:asm:5.0.4\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: jakarta.xml.bind:jakarta.xml.bind-api:2.3.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: jakarta.activation:jakarta.activation-api:1.2.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.junit.jupiter:junit-jupiter:5.5.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.junit.jupiter:junit-jupiter-api:5.5.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.apiguardian:apiguardian-api:1.1.0\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.opentest4j:opentest4j:1.2.0\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.junit.platform:junit-platform-commons:1.5.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.junit.jupiter:junit-jupiter-params:5.5.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.junit.jupiter:junit-jupiter-engine:5.5.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.junit.platform:junit-platform-engine:1.5.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.mockito:mockito-junit-jupiter:3.1.0\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.assertj:assertj-core:3.13.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.hamcrest:hamcrest:2.1\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.mockito:mockito-core:3.1.0\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: net.bytebuddy:byte-buddy-agent:1.10.8\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.objenesis:objenesis:2.6\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.skyscreamer:jsonassert:1.5.0\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: com.vaadin.external.google:android-json:0.0.20131108.vaadin1\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.springframework:spring-core:5.2.5.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.springframework:spring-jcl:5.2.5.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.springframework:spring-test:5.2.5.RELEASE\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.xmlunit:xmlunit-core:2.6.4\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: junit:junit:4.12\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.hamcrest:hamcrest-core:2.1\" level=\"project\" />\r\n  </component>\r\n</module>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- test.iml	(revision 384a8367a6eeac859ebb975399391b6855b2ed53)
++++ test.iml	(date 1590765379288)
+@@ -25,6 +25,37 @@
+     </content>
+     <orderEntry type="inheritedJdk" />
+     <orderEntry type="sourceFolder" forTests="false" />
++    <orderEntry type="module-library">
++      <library>
++        <CLASSES>
++          <root url="file://$MODULE_DIR$/.idea/libraries" />
++        </CLASSES>
++        <JAVADOC />
++        <SOURCES />
++        <jarDirectory url="file://$MODULE_DIR$/.idea/libraries" recursive="false" />
++      </library>
++    </orderEntry>
++    <orderEntry type="module-library">
++      <library>
++        <CLASSES>
++          <root url="file://$MODULE_DIR$/.idea/libraries" />
++        </CLASSES>
++        <JAVADOC />
++        <SOURCES />
++        <jarDirectory url="file://$MODULE_DIR$/.idea/libraries" recursive="false" />
++      </library>
++    </orderEntry>
++    <orderEntry type="module-library">
++      <library>
++        <CLASSES>
++          <root url="jar://$USER_HOME$/Desktop/Selenium/client-combined-3.141.59.jar!/" />
++        </CLASSES>
++        <JAVADOC />
++        <SOURCES>
++          <root url="jar://$USER_HOME$/Desktop/Selenium/client-combined-3.141.59-sources.jar!/" />
++        </SOURCES>
++      </library>
++    </orderEntry>
+     <orderEntry type="library" name="Maven: org.seleniumhq.selenium:selenium-java:3.141.59" level="project" />
+     <orderEntry type="library" name="Maven: org.seleniumhq.selenium:selenium-api:3.141.59" level="project" />
+     <orderEntry type="library" name="Maven: org.seleniumhq.selenium:selenium-chrome-driver:3.141.59" level="project" />
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"e805153b-1fee-4fcc-aa70-1e81437711d1\" name=\"Default Changelist\" comment=\"\">\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/mandatory/test/HomeController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/mandatory/test/HomeController.java\" afterDir=\"false\" />\r\n    </list>\r\n    <ignored path=\"$PROJECT_DIR$/target/\" />\r\n    <option name=\"EXCLUDED_CONVERTED_TO_IGNORED\" value=\"true\" />\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileEditorManager\">\r\n    <leaf SIDE_TABS_SIZE_LIMIT_KEY=\"300\">\r\n      <file pinned=\"false\" current-in-tab=\"true\">\r\n        <entry file=\"file://$PROJECT_DIR$/src/test/java/mandatory/test/SeleniumTest.java\">\r\n          <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n            <state relative-caret-position=\"159\">\r\n              <caret line=\"589\" lean-forward=\"true\" selection-start-line=\"589\" selection-end-line=\"589\" />\r\n            </state>\r\n          </provider>\r\n        </entry>\r\n      </file>\r\n      <file pinned=\"false\" current-in-tab=\"false\">\r\n        <entry file=\"file://$PROJECT_DIR$/src/main/java/mandatory/test/HomeController.java\">\r\n          <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n            <state relative-caret-position=\"540\">\r\n              <caret line=\"54\" column=\"9\" selection-start-line=\"54\" selection-start-column=\"9\" selection-end-line=\"54\" selection-end-column=\"9\" />\r\n            </state>\r\n          </provider>\r\n        </entry>\r\n      </file>\r\n      <file pinned=\"false\" current-in-tab=\"false\">\r\n        <entry file=\"file://$PROJECT_DIR$/src/main/resources/templates/game.html\">\r\n          <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n            <state relative-caret-position=\"435\">\r\n              <caret line=\"29\" column=\"35\" selection-start-line=\"29\" selection-start-column=\"29\" selection-end-line=\"29\" selection-end-column=\"35\" />\r\n              <folding>\r\n                <element signature=\"n#style#0;n#p#0;n#body#0;n#html#0;n#!!top\" expanded=\"true\" />\r\n                <element signature=\"n#style#0;n#p#1;n#body#0;n#html#0;n#!!top\" expanded=\"true\" />\r\n                <element signature=\"n#style#0;n#h3#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top\" expanded=\"true\" />\r\n              </folding>\r\n            </state>\r\n          </provider>\r\n        </entry>\r\n      </file>\r\n      <file pinned=\"false\" current-in-tab=\"false\">\r\n        <entry file=\"file://$PROJECT_DIR$/src/main/java/mandatory/test/Game.java\">\r\n          <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n            <state relative-caret-position=\"2190\">\r\n              <caret line=\"173\" column=\"9\" selection-start-line=\"173\" selection-start-column=\"9\" selection-end-line=\"173\" selection-end-column=\"9\" />\r\n              <folding>\r\n                <element signature=\"imports\" expanded=\"true\" />\r\n                <element signature=\"e#1073#1074#0\" expanded=\"true\" />\r\n                <element signature=\"e#1106#1107#0\" expanded=\"true\" />\r\n              </folding>\r\n            </state>\r\n          </provider>\r\n        </entry>\r\n      </file>\r\n      <file pinned=\"false\" current-in-tab=\"false\">\r\n        <entry file=\"file://$PROJECT_DIR$/src/test/java/mandatory/test/GameTest.java\">\r\n          <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n            <state relative-caret-position=\"1365\">\r\n              <caret line=\"100\" column=\"24\" selection-start-line=\"100\" selection-start-column=\"24\" selection-end-line=\"100\" selection-end-column=\"24\" />\r\n              <folding>\r\n                <element signature=\"imports\" expanded=\"true\" />\r\n                <element signature=\"e#614#615#0\" expanded=\"true\" />\r\n                <element signature=\"e#647#648#0\" expanded=\"true\" />\r\n              </folding>\r\n            </state>\r\n          </provider>\r\n        </entry>\r\n      </file>\r\n      <file pinned=\"false\" current-in-tab=\"false\">\r\n        <entry file=\"jar://$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-api/5.5.2/junit-jupiter-api-5.5.2.jar!/org/junit/jupiter/api/Assertions.class\">\r\n          <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n            <state relative-caret-position=\"21450\">\r\n              <caret line=\"1521\" selection-start-line=\"1521\" selection-end-line=\"1521\" />\r\n            </state>\r\n          </provider>\r\n        </entry>\r\n      </file>\r\n      <file pinned=\"false\" current-in-tab=\"false\">\r\n        <entry file=\"jar://$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-api/5.5.2/junit-jupiter-api-5.5.2.jar!/org/junit/jupiter/api/AssertThrows.class\">\r\n          <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n            <state relative-caret-position=\"360\">\r\n              <caret line=\"30\" selection-start-line=\"30\" selection-end-line=\"30\" />\r\n            </state>\r\n          </provider>\r\n        </entry>\r\n      </file>\r\n      <file pinned=\"false\" current-in-tab=\"false\">\r\n        <entry file=\"jar://$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-api/5.5.2/junit-jupiter-api-5.5.2.jar!/org/junit/jupiter/api/AssertTrue.class\">\r\n          <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n            <state relative-caret-position=\"210\">\r\n              <caret line=\"18\" selection-start-line=\"18\" selection-end-line=\"18\" />\r\n              <folding>\r\n                <element signature=\"e#403#404#0\" expanded=\"true\" />\r\n              </folding>\r\n            </state>\r\n          </provider>\r\n        </entry>\r\n      </file>\r\n    </leaf>\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"CSS File\" />\r\n        <option value=\"HTML File\" />\r\n        <option value=\"JUnit5 Test Class\" />\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"FindInProjectRecents\">\r\n    <findStrings>\r\n      <find>playerA</find>\r\n    </findStrings>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"IdeDocumentHistory\">\r\n    <option name=\"CHANGED_PATHS\">\r\n      <list>\r\n        <option value=\"$PROJECT_DIR$/src/main/resources/templates/index.html\" />\r\n        <option value=\"$PROJECT_DIR$/src/main/java/mandatory/test/Purchase.java\" />\r\n        <option value=\"$PROJECT_DIR$/src/main/resources/static/home.css\" />\r\n        <option value=\"$PROJECT_DIR$/src/main/resources/templates/game1.html\" />\r\n        <option value=\"$PROJECT_DIR$/src/main/resources/static/css/home.css\" />\r\n        <option value=\"$PROJECT_DIR$/src/main/resources/static/css/game.css\" />\r\n        <option value=\"$PROJECT_DIR$/src/test/java/mandatory/test/PurchaseTest.java\" />\r\n        <option value=\"$PROJECT_DIR$/pom.xml\" />\r\n        <option value=\"$PROJECT_DIR$/src/test/java/mandatory/test/Case2Test.java\" />\r\n        <option value=\"$PROJECT_DIR$/src/test/java/mandatory/test/Case4Test.java\" />\r\n        <option value=\"$PROJECT_DIR$/src/test/java/mandatory/test/DataProvider.java\" />\r\n        <option value=\"$PROJECT_DIR$/src/test/java/mandatory/test/LC4Test.java\" />\r\n        <option value=\"$PROJECT_DIR$/src/test/java/mandatory/test/Case1Test.java\" />\r\n        <option value=\"$PROJECT_DIR$/src/test/java/mandatory/test/InvalidStartLifeTest.java\" />\r\n        <option value=\"$PROJECT_DIR$/src/main/resources/templates/home.html\" />\r\n        <option value=\"$PROJECT_DIR$/src/main/java/mandatory/test/HomeController.java\" />\r\n        <option value=\"$PROJECT_DIR$/src/main/java/mandatory/test/TestApplication.java\" />\r\n        <option value=\"$PROJECT_DIR$/src/main/java/mandatory/test/Game.java\" />\r\n        <option value=\"$PROJECT_DIR$/src/test/java/mandatory/test/GameTest.java\" />\r\n        <option value=\"$PROJECT_DIR$/src/main/resources/templates/game.html\" />\r\n        <option value=\"$PROJECT_DIR$/src/test/java/mandatory/test/SeleniumTest.java\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectFrameBounds\">\r\n    <option name=\"y\" value=\"23\" />\r\n    <option name=\"width\" value=\"1440\" />\r\n    <option name=\"height\" value=\"877\" />\r\n  </component>\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\r\n    <ConfirmationsSetting value=\"1\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectView\">\r\n    <navigator proportions=\"\" version=\"1\">\r\n      <foldersAlwaysOnTop value=\"true\" />\r\n    </navigator>\r\n    <panes>\r\n      <pane id=\"PackagesPane\" />\r\n      <pane id=\"ProjectPane\">\r\n        <subPane>\r\n          <expand>\r\n            <path>\r\n              <item name=\"test\" type=\"b2602c69:ProjectViewProjectNode\" />\r\n              <item name=\"MA_2_TESTS\" type=\"462c0819:PsiDirectoryNode\" />\r\n            </path>\r\n            <path>\r\n              <item name=\"test\" type=\"b2602c69:ProjectViewProjectNode\" />\r\n              <item name=\"MA_2_TESTS\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"src\" type=\"462c0819:PsiDirectoryNode\" />\r\n            </path>\r\n            <path>\r\n              <item name=\"test\" type=\"b2602c69:ProjectViewProjectNode\" />\r\n              <item name=\"MA_2_TESTS\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"src\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"main\" type=\"462c0819:PsiDirectoryNode\" />\r\n            </path>\r\n            <path>\r\n              <item name=\"test\" type=\"b2602c69:ProjectViewProjectNode\" />\r\n              <item name=\"MA_2_TESTS\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"src\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"main\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"java\" type=\"462c0819:PsiDirectoryNode\" />\r\n            </path>\r\n            <path>\r\n              <item name=\"test\" type=\"b2602c69:ProjectViewProjectNode\" />\r\n              <item name=\"MA_2_TESTS\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"src\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"main\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"java\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"test\" type=\"462c0819:PsiDirectoryNode\" />\r\n            </path>\r\n            <path>\r\n              <item name=\"test\" type=\"b2602c69:ProjectViewProjectNode\" />\r\n              <item name=\"MA_2_TESTS\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"src\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"main\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"resources\" type=\"462c0819:PsiDirectoryNode\" />\r\n            </path>\r\n            <path>\r\n              <item name=\"test\" type=\"b2602c69:ProjectViewProjectNode\" />\r\n              <item name=\"MA_2_TESTS\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"src\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"main\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"resources\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"static\" type=\"462c0819:PsiDirectoryNode\" />\r\n            </path>\r\n            <path>\r\n              <item name=\"test\" type=\"b2602c69:ProjectViewProjectNode\" />\r\n              <item name=\"MA_2_TESTS\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"src\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"main\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"resources\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"static\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"css\" type=\"462c0819:PsiDirectoryNode\" />\r\n            </path>\r\n            <path>\r\n              <item name=\"test\" type=\"b2602c69:ProjectViewProjectNode\" />\r\n              <item name=\"MA_2_TESTS\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"src\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"main\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"resources\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"static\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"img\" type=\"462c0819:PsiDirectoryNode\" />\r\n            </path>\r\n            <path>\r\n              <item name=\"test\" type=\"b2602c69:ProjectViewProjectNode\" />\r\n              <item name=\"MA_2_TESTS\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"src\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"main\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"resources\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"templates\" type=\"462c0819:PsiDirectoryNode\" />\r\n            </path>\r\n            <path>\r\n              <item name=\"test\" type=\"b2602c69:ProjectViewProjectNode\" />\r\n              <item name=\"MA_2_TESTS\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"src\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"test\" type=\"462c0819:PsiDirectoryNode\" />\r\n            </path>\r\n            <path>\r\n              <item name=\"test\" type=\"b2602c69:ProjectViewProjectNode\" />\r\n              <item name=\"MA_2_TESTS\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"src\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"test\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"java\" type=\"462c0819:PsiDirectoryNode\" />\r\n            </path>\r\n            <path>\r\n              <item name=\"test\" type=\"b2602c69:ProjectViewProjectNode\" />\r\n              <item name=\"MA_2_TESTS\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"src\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"test\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"java\" type=\"462c0819:PsiDirectoryNode\" />\r\n              <item name=\"test\" type=\"462c0819:PsiDirectoryNode\" />\r\n            </path>\r\n          </expand>\r\n          <select />\r\n        </subPane>\r\n      </pane>\r\n      <pane id=\"Scope\" />\r\n    </panes>\r\n  </component>\r\n  <component name=\"PropertiesComponent\">\r\n    <property name=\"DefaultHtmlFileTemplate\" value=\"HTML File\" />\r\n    <property name=\"RequestMappingsPanelOrder0\" value=\"0\" />\r\n    <property name=\"RequestMappingsPanelOrder1\" value=\"1\" />\r\n    <property name=\"RequestMappingsPanelWidth0\" value=\"75\" />\r\n    <property name=\"RequestMappingsPanelWidth1\" value=\"75\" />\r\n    <property name=\"WebServerToolWindowFactoryState\" value=\"false\" />\r\n    <property name=\"aspect.path.notification.shown\" value=\"true\" />\r\n    <property name=\"com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp\" value=\"1590765226311\" />\r\n    <property name=\"com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary\" value=\"JUnit5\" />\r\n    <property name=\"com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5\" value=\"\" />\r\n    <property name=\"list.type.of.created.stylesheet\" value=\"CSS\" />\r\n    <property name=\"nodejs_interpreter_path.stuck_in_default_project\" value=\"undefined stuck path\" />\r\n    <property name=\"nodejs_npm_path_reset_for_default_project\" value=\"true\" />\r\n    <property name=\"restartRequiresConfirmation\" value=\"false\" />\r\n    <property name=\"settings.editor.selected.configurable\" value=\"project.propVCSSupport.Mappings\" />\r\n  </component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CreateTestDialog.RecentsKey\">\r\n      <recent name=\"mandatory.test\" />\r\n    </key>\r\n    <key name=\"CreateTestDialog.Recents.Supers\">\r\n      <recent name=\"\" />\r\n    </key>\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"$PROJECT_DIR$/src/main/resources/static/img\" />\r\n      <recent name=\"$PROJECT_DIR$/src/main/resources/static/css\" />\r\n      <recent name=\"$PROJECT_DIR$/src/main/resources/static/css/css\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunDashboard\">\r\n    <option name=\"ruleStates\">\r\n      <list>\r\n        <RuleState>\r\n          <option name=\"name\" value=\"ConfigurationTypeDashboardGroupingRule\" />\r\n        </RuleState>\r\n        <RuleState>\r\n          <option name=\"name\" value=\"StatusDashboardGroupingRule\" />\r\n        </RuleState>\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"JUnit.SeleniumTest.setLifeToMax\">\r\n    <configuration name=\"SeleniumTest\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"test\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"mandatory.test.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"mandatory.test\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"mandatory.test.SeleniumTest\" />\r\n      <option name=\"TEST_OBJECT\" value=\"class\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"SeleniumTest.dice\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"test\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"mandatory.test.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"mandatory.test\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"mandatory.test.SeleniumTest\" />\r\n      <option name=\"METHOD_NAME\" value=\"dice\" />\r\n      <option name=\"TEST_OBJECT\" value=\"method\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"SeleniumTest.plusLife\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"test\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"mandatory.test.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"mandatory.test\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"mandatory.test.SeleniumTest\" />\r\n      <option name=\"METHOD_NAME\" value=\"plusLife\" />\r\n      <option name=\"TEST_OBJECT\" value=\"method\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"SeleniumTest.plusLifeToMax\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"test\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"mandatory.test.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"mandatory.test\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"mandatory.test.SeleniumTest\" />\r\n      <option name=\"METHOD_NAME\" value=\"plusLifeToMax\" />\r\n      <option name=\"TEST_OBJECT\" value=\"method\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"SeleniumTest.setLifeToMax\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"test\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"mandatory.test.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"mandatory.test\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"mandatory.test.SeleniumTest\" />\r\n      <option name=\"METHOD_NAME\" value=\"setLifeToMax\" />\r\n      <option name=\"TEST_OBJECT\" value=\"method\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"TestApplication\" type=\"SpringBootApplicationConfigurationType\" factoryName=\"Spring Boot\">\r\n      <module name=\"test\" />\r\n      <option name=\"SPRING_BOOT_MAIN_CLASS\" value=\"mandatory.test.TestApplication\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"JUnit.SeleniumTest.setLifeToMax\" />\r\n        <item itemvalue=\"JUnit.SeleniumTest\" />\r\n        <item itemvalue=\"JUnit.SeleniumTest.plusLife\" />\r\n        <item itemvalue=\"JUnit.SeleniumTest.dice\" />\r\n        <item itemvalue=\"JUnit.SeleniumTest.plusLifeToMax\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SQLPlugin.ProjectConfiguration\">\r\n    <queries />\r\n  </component>\r\n  <component name=\"SvnConfiguration\">\r\n    <configuration />\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"e805153b-1fee-4fcc-aa70-1e81437711d1\" name=\"Default Changelist\" comment=\"\" />\r\n      <created>1585835288202</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1585835288202</updated>\r\n      <workItem from=\"1585835292261\" duration=\"2121000\" />\r\n      <workItem from=\"1585841743694\" duration=\"3919000\" />\r\n      <workItem from=\"1585897711573\" duration=\"324000\" />\r\n      <workItem from=\"1590246949534\" duration=\"5000\" />\r\n      <workItem from=\"1590246982361\" duration=\"16156000\" />\r\n      <workItem from=\"1590307915162\" duration=\"28374000\" />\r\n      <workItem from=\"1590346329664\" duration=\"19733000\" />\r\n      <workItem from=\"1590412299268\" duration=\"26634000\" />\r\n      <workItem from=\"1590567956078\" duration=\"17678000\" />\r\n      <workItem from=\"1590592107812\" duration=\"6159000\" />\r\n      <workItem from=\"1590656640549\" duration=\"10615000\" />\r\n      <workItem from=\"1590738820634\" duration=\"14586000\" />\r\n      <workItem from=\"1590764092530\" duration=\"980000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TestHistory\">\r\n    <history-entry file=\"SeleniumTest_dice - 2020.05.29 at 16h 53m 02s.xml\">\r\n      <configuration name=\"SeleniumTest.dice\" configurationId=\"JUnit\" />\r\n    </history-entry>\r\n    <history-entry file=\"SeleniumTest_dice - 2020.05.29 at 16h 53m 29s.xml\">\r\n      <configuration name=\"SeleniumTest.dice\" configurationId=\"JUnit\" />\r\n    </history-entry>\r\n    <history-entry file=\"SeleniumTest_dice - 2020.05.29 at 16h 55m 10s.xml\">\r\n      <configuration name=\"SeleniumTest.dice\" configurationId=\"JUnit\" />\r\n    </history-entry>\r\n    <history-entry file=\"SeleniumTest_dice - 2020.05.29 at 16h 56m 09s.xml\">\r\n      <configuration name=\"SeleniumTest.dice\" configurationId=\"JUnit\" />\r\n    </history-entry>\r\n    <history-entry file=\"SeleniumTest - 2020.05.29 at 16h 59m 50s.xml\">\r\n      <configuration name=\"SeleniumTest\" configurationId=\"JUnit\" />\r\n    </history-entry>\r\n    <history-entry file=\"SeleniumTest_plusLife - 2020.05.29 at 17h 01m 24s.xml\">\r\n      <configuration name=\"SeleniumTest.plusLife\" configurationId=\"JUnit\" />\r\n    </history-entry>\r\n    <history-entry file=\"SeleniumTest - 2020.05.29 at 17h 07m 12s.xml\">\r\n      <configuration name=\"SeleniumTest\" configurationId=\"JUnit\" />\r\n    </history-entry>\r\n    <history-entry file=\"SeleniumTest_setLifeToMax - 2020.05.29 at 17h 10m 42s.xml\">\r\n      <configuration name=\"SeleniumTest.setLifeToMax\" configurationId=\"JUnit\" />\r\n    </history-entry>\r\n    <history-entry file=\"SeleniumTest_setLifeToMax - 2020.05.29 at 17h 11m 37s.xml\">\r\n      <configuration name=\"SeleniumTest.setLifeToMax\" configurationId=\"JUnit\" />\r\n    </history-entry>\r\n    <history-entry file=\"SeleniumTest_setLifeToMax - 2020.05.29 at 17h 12m 24s.xml\">\r\n      <configuration name=\"SeleniumTest.setLifeToMax\" configurationId=\"JUnit\" />\r\n    </history-entry>\r\n  </component>\r\n  <component name=\"TimeTrackingManager\">\r\n    <option name=\"totallyTimeSpent\" value=\"147284000\" />\r\n  </component>\r\n  <component name=\"ToolWindowManager\">\r\n    <frame x=\"0\" y=\"23\" width=\"1440\" height=\"877\" extended-state=\"0\" />\r\n    <editor active=\"true\" />\r\n    <layout>\r\n      <window_info content_ui=\"combo\" id=\"Project\" order=\"0\" weight=\"0.19098713\" />\r\n      <window_info id=\"Structure\" order=\"1\" side_tool=\"true\" weight=\"0.25\" />\r\n      <window_info id=\"Designer\" order=\"2\" />\r\n      <window_info id=\"Image Layers\" order=\"3\" />\r\n      <window_info id=\"Capture Tool\" order=\"4\" />\r\n      <window_info id=\"UI Designer\" order=\"5\" />\r\n      <window_info id=\"Favorites\" order=\"6\" side_tool=\"true\" />\r\n      <window_info id=\"Web\" order=\"7\" side_tool=\"true\" />\r\n      <window_info anchor=\"bottom\" id=\"Message\" order=\"0\" />\r\n      <window_info anchor=\"bottom\" id=\"Find\" order=\"1\" weight=\"0.3299363\" />\r\n      <window_info active=\"true\" anchor=\"bottom\" id=\"Run\" order=\"2\" visible=\"true\" weight=\"0.26496816\" />\r\n      <window_info anchor=\"bottom\" id=\"Debug\" order=\"3\" weight=\"0.4\" />\r\n      <window_info anchor=\"bottom\" id=\"Cvs\" order=\"4\" weight=\"0.25\" />\r\n      <window_info anchor=\"bottom\" id=\"Inspection\" order=\"5\" weight=\"0.4\" />\r\n      <window_info anchor=\"bottom\" id=\"TODO\" order=\"6\" />\r\n      <window_info anchor=\"bottom\" id=\"SQL\" order=\"7\" />\r\n      <window_info anchor=\"bottom\" id=\"Spring\" order=\"8\" />\r\n      <window_info anchor=\"bottom\" id=\"Terminal\" order=\"9\" weight=\"0.21528663\" />\r\n      <window_info anchor=\"bottom\" id=\"Docker\" order=\"10\" show_stripe_button=\"false\" />\r\n      <window_info anchor=\"bottom\" id=\"Event Log\" order=\"11\" side_tool=\"true\" />\r\n      <window_info anchor=\"bottom\" id=\"Messages\" order=\"12\" weight=\"0.3299363\" />\r\n      <window_info anchor=\"bottom\" id=\"Java Enterprise\" order=\"13\" />\r\n      <window_info anchor=\"bottom\" id=\"Database Changes\" order=\"14\" />\r\n      <window_info anchor=\"bottom\" id=\"Version Control\" order=\"15\" weight=\"0.3299363\" />\r\n      <window_info anchor=\"right\" id=\"Commander\" internal_type=\"SLIDING\" order=\"0\" type=\"SLIDING\" weight=\"0.4\" />\r\n      <window_info anchor=\"right\" id=\"Ant Build\" order=\"1\" weight=\"0.24926254\" />\r\n      <window_info anchor=\"right\" content_ui=\"combo\" id=\"Hierarchy\" order=\"2\" weight=\"0.25\" />\r\n      <window_info anchor=\"right\" id=\"Maven\" order=\"3\" />\r\n      <window_info anchor=\"right\" id=\"Palette\" order=\"4\" />\r\n      <window_info anchor=\"right\" id=\"Capture Analysis\" order=\"5\" />\r\n      <window_info anchor=\"right\" id=\"Database\" order=\"6\" />\r\n      <window_info anchor=\"right\" id=\"Palette&#9;\" order=\"7\" />\r\n      <window_info anchor=\"right\" id=\"Theme Preview\" order=\"8\" />\r\n      <window_info anchor=\"right\" id=\"Bean Validation\" order=\"9\" />\r\n    </layout>\r\n    <layout-to-restore>\r\n      <window_info content_ui=\"combo\" id=\"Project\" order=\"0\" visible=\"true\" weight=\"0.19098713\" />\r\n      <window_info id=\"Structure\" order=\"1\" side_tool=\"true\" weight=\"0.25\" />\r\n      <window_info id=\"Designer\" order=\"2\" />\r\n      <window_info id=\"Image Layers\" order=\"3\" />\r\n      <window_info id=\"Capture Tool\" order=\"4\" />\r\n      <window_info id=\"UI Designer\" order=\"5\" />\r\n      <window_info id=\"Favorites\" order=\"6\" side_tool=\"true\" />\r\n      <window_info id=\"Web\" order=\"7\" side_tool=\"true\" />\r\n      <window_info anchor=\"bottom\" id=\"Message\" order=\"0\" />\r\n      <window_info anchor=\"bottom\" id=\"Find\" order=\"1\" weight=\"0.3299363\" />\r\n      <window_info active=\"true\" anchor=\"bottom\" id=\"Run\" order=\"2\" visible=\"true\" weight=\"0.26496816\" />\r\n      <window_info anchor=\"bottom\" id=\"Debug\" order=\"3\" weight=\"0.4\" />\r\n      <window_info anchor=\"bottom\" id=\"Cvs\" order=\"4\" weight=\"0.25\" />\r\n      <window_info anchor=\"bottom\" id=\"Inspection\" order=\"5\" weight=\"0.4\" />\r\n      <window_info anchor=\"bottom\" id=\"TODO\" order=\"6\" />\r\n      <window_info anchor=\"bottom\" id=\"SQL\" order=\"7\" />\r\n      <window_info anchor=\"bottom\" id=\"Spring\" order=\"8\" />\r\n      <window_info anchor=\"bottom\" id=\"Terminal\" order=\"9\" weight=\"0.21528663\" />\r\n      <window_info anchor=\"bottom\" id=\"Docker\" order=\"10\" show_stripe_button=\"false\" />\r\n      <window_info anchor=\"bottom\" id=\"Event Log\" order=\"11\" side_tool=\"true\" />\r\n      <window_info anchor=\"bottom\" id=\"Messages\" order=\"12\" weight=\"0.3299363\" />\r\n      <window_info anchor=\"bottom\" id=\"Java Enterprise\" order=\"13\" />\r\n      <window_info anchor=\"bottom\" id=\"Database Changes\" order=\"14\" />\r\n      <window_info anchor=\"bottom\" id=\"Version Control\" order=\"15\" weight=\"0.3299363\" />\r\n      <window_info anchor=\"right\" id=\"Commander\" internal_type=\"SLIDING\" order=\"0\" type=\"SLIDING\" weight=\"0.4\" />\r\n      <window_info anchor=\"right\" id=\"Ant Build\" order=\"1\" weight=\"0.24926254\" />\r\n      <window_info anchor=\"right\" content_ui=\"combo\" id=\"Hierarchy\" order=\"2\" weight=\"0.25\" />\r\n      <window_info anchor=\"right\" id=\"Maven\" order=\"3\" />\r\n      <window_info anchor=\"right\" id=\"Palette\" order=\"4\" />\r\n      <window_info anchor=\"right\" id=\"Capture Analysis\" order=\"5\" />\r\n      <window_info anchor=\"right\" id=\"Database\" order=\"6\" />\r\n      <window_info anchor=\"right\" id=\"Palette&#9;\" order=\"7\" />\r\n      <window_info anchor=\"right\" id=\"Theme Preview\" order=\"8\" />\r\n      <window_info anchor=\"right\" id=\"Bean Validation\" order=\"9\" />\r\n    </layout-to-restore>\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"1\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State>\r\n              <option name=\"RECENTLY_FILTERED_USER_GROUPS\">\r\n                <collection />\r\n              </option>\r\n              <option name=\"RECENTLY_FILTERED_BRANCH_GROUPS\">\r\n                <collection />\r\n              </option>\r\n              <option name=\"COLUMN_ORDER\">\r\n                <list>\r\n                  <option value=\"0\" />\r\n                  <option value=\"1\" />\r\n                  <option value=\"2\" />\r\n                  <option value=\"3\" />\r\n                </list>\r\n              </option>\r\n            </State>\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_FILTERS\">\r\n      <map>\r\n        <entry key=\"Branch\">\r\n          <value>\r\n            <list />\r\n          </value>\r\n        </entry>\r\n        <entry key=\"User\">\r\n          <value>\r\n            <list />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <ignored-roots>\r\n      <path value=\"$PROJECT_DIR$\" />\r\n    </ignored-roots>\r\n  </component>\r\n  <component name=\"antWorkspaceConfiguration\">\r\n    <option name=\"IS_AUTOSCROLL_TO_SOURCE\" value=\"false\" />\r\n    <option name=\"FILTER_TARGETS\" value=\"false\" />\r\n  </component>\r\n  <component name=\"editorHistoryManager\">\r\n    <entry file=\"file://$PROJECT_DIR$/src/main/resources/application.properties\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\" />\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/src/main/resources/static/img/life_counter.png\">\r\n      <provider selected=\"true\" editor-type-id=\"images\" />\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/src/main/resources/static/img/background_MTG.png\">\r\n      <provider selected=\"true\" editor-type-id=\"images\" />\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/src/test/java/mandatory/test/PurchaseTest.java\" />\r\n    <entry file=\"file://$PROJECT_DIR$/src/main/java/mandatory/test/Purchase.java\" />\r\n    <entry file=\"file://$PROJECT_DIR$/src/main/resources/templates/index.html\" />\r\n    <entry file=\"file://$PROJECT_DIR$/src/main/resources/static/css/game.css\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"343\">\r\n          <caret line=\"44\" selection-start-line=\"44\" selection-end-line=\"44\" />\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/src/main/resources/templates/game1.html\" />\r\n    <entry file=\"file://$PROJECT_DIR$/test.iml\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\" />\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/src/main/resources/static/css/home.css\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"60\">\r\n          <caret line=\"4\" column=\"22\" selection-start-line=\"4\" selection-start-column=\"17\" selection-end-line=\"4\" selection-end-column=\"22\" />\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/pom.xml\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"420\">\r\n          <caret line=\"28\" selection-start-line=\"28\" selection-end-line=\"28\" />\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/src/test/java/mandatory/test/Case2Test.java\" />\r\n    <entry file=\"file://$PROJECT_DIR$/src/test/java/mandatory/test/Case4Test.java\" />\r\n    <entry file=\"file://$PROJECT_DIR$/src/test/java/mandatory/test/Case6Test.java\" />\r\n    <entry file=\"file://$PROJECT_DIR$/src/test/java/mandatory/test/LC3Test.java\" />\r\n    <entry file=\"file://$PROJECT_DIR$/src/test/java/mandatory/test/LC7Test.java\" />\r\n    <entry file=\"file://$PROJECT_DIR$/src/test/java/mandatory/test/LC8Test.java\" />\r\n    <entry file=\"file://$PROJECT_DIR$/src/test/java/mandatory/test/LC10Test.java\" />\r\n    <entry file=\"file://$PROJECT_DIR$/src/test/java/mandatory/test/LC11Test.java\" />\r\n    <entry file=\"file://$PROJECT_DIR$/src/test/java/mandatory/test/LC4Test.java\" />\r\n    <entry file=\"file://$PROJECT_DIR$/src/test/java/mandatory/test/DataProvider.java\" />\r\n    <entry file=\"file://$PROJECT_DIR$/src/test/java/mandatory/test/LC9Test.java\" />\r\n    <entry file=\"file://$PROJECT_DIR$/src/test/java/mandatory/test/DiceTest.java\" />\r\n    <entry file=\"file://$PROJECT_DIR$/src/test/java/mandatory/test/InvalidStartLifeTest.java\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"562\">\r\n          <caret line=\"79\" column=\"32\" selection-start-line=\"79\" selection-start-column=\"32\" selection-end-line=\"79\" selection-end-column=\"32\" />\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/src/main/resources/templates/home.html\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"270\">\r\n          <caret line=\"66\" column=\"79\" selection-start-line=\"66\" selection-start-column=\"23\" selection-end-line=\"66\" selection-end-column=\"79\" />\r\n          <folding>\r\n            <element signature=\"n#style#0;n#input#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top\" expanded=\"true\" />\r\n          </folding>\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/src/main/java/mandatory/test/TestApplication.java\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"60\">\r\n          <caret line=\"4\" selection-start-line=\"4\" selection-end-line=\"4\" />\r\n          <folding>\r\n            <element signature=\"imports\" expanded=\"true\" />\r\n          </folding>\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/src/test/java/mandatory/test/SeleniumTest.java\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"159\">\r\n          <caret line=\"589\" lean-forward=\"true\" selection-start-line=\"589\" selection-end-line=\"589\" />\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/src/main/java/mandatory/test/HomeController.java\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"540\">\r\n          <caret line=\"54\" column=\"9\" selection-start-line=\"54\" selection-start-column=\"9\" selection-end-line=\"54\" selection-end-column=\"9\" />\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/src/main/resources/templates/game.html\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"435\">\r\n          <caret line=\"29\" column=\"35\" selection-start-line=\"29\" selection-start-column=\"29\" selection-end-line=\"29\" selection-end-column=\"35\" />\r\n          <folding>\r\n            <element signature=\"n#style#0;n#p#0;n#body#0;n#html#0;n#!!top\" expanded=\"true\" />\r\n            <element signature=\"n#style#0;n#p#1;n#body#0;n#html#0;n#!!top\" expanded=\"true\" />\r\n            <element signature=\"n#style#0;n#h3#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top\" expanded=\"true\" />\r\n          </folding>\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/src/main/java/mandatory/test/Game.java\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"2190\">\r\n          <caret line=\"173\" column=\"9\" selection-start-line=\"173\" selection-start-column=\"9\" selection-end-line=\"173\" selection-end-column=\"9\" />\r\n          <folding>\r\n            <element signature=\"imports\" expanded=\"true\" />\r\n            <element signature=\"e#1073#1074#0\" expanded=\"true\" />\r\n            <element signature=\"e#1106#1107#0\" expanded=\"true\" />\r\n          </folding>\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"file://$PROJECT_DIR$/src/test/java/mandatory/test/GameTest.java\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"1365\">\r\n          <caret line=\"100\" column=\"24\" selection-start-line=\"100\" selection-start-column=\"24\" selection-end-line=\"100\" selection-end-column=\"24\" />\r\n          <folding>\r\n            <element signature=\"imports\" expanded=\"true\" />\r\n            <element signature=\"e#614#615#0\" expanded=\"true\" />\r\n            <element signature=\"e#647#648#0\" expanded=\"true\" />\r\n          </folding>\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"jar://$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-api/5.5.2/junit-jupiter-api-5.5.2.jar!/org/junit/jupiter/api/Assertions.class\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"21450\">\r\n          <caret line=\"1521\" selection-start-line=\"1521\" selection-end-line=\"1521\" />\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"jar://$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-api/5.5.2/junit-jupiter-api-5.5.2.jar!/org/junit/jupiter/api/AssertThrows.class\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"360\">\r\n          <caret line=\"30\" selection-start-line=\"30\" selection-end-line=\"30\" />\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n    <entry file=\"jar://$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-api/5.5.2/junit-jupiter-api-5.5.2.jar!/org/junit/jupiter/api/AssertTrue.class\">\r\n      <provider selected=\"true\" editor-type-id=\"text-editor\">\r\n        <state relative-caret-position=\"210\">\r\n          <caret line=\"18\" selection-start-line=\"18\" selection-end-line=\"18\" />\r\n          <folding>\r\n            <element signature=\"e#403#404#0\" expanded=\"true\" />\r\n          </folding>\r\n        </state>\r\n      </provider>\r\n    </entry>\r\n  </component>\r\n  <component name=\"masterDetails\">\r\n    <states>\r\n      <state key=\"ScopeChooserConfigurable.UI\">\r\n        <settings>\r\n          <splitter-proportions>\r\n            <option name=\"proportions\">\r\n              <list>\r\n                <option value=\"0.2\" />\r\n              </list>\r\n            </option>\r\n          </splitter-proportions>\r\n        </settings>\r\n      </state>\r\n    </states>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/workspace.xml	(revision 384a8367a6eeac859ebb975399391b6855b2ed53)
++++ .idea/workspace.xml	(date 1591296258569)
+@@ -2,108 +2,22 @@
+ <project version="4">
+   <component name="ChangeListManager">
+     <list default="true" id="e805153b-1fee-4fcc-aa70-1e81437711d1" name="Default Changelist" comment="">
+-      <change beforePath="$PROJECT_DIR$/src/main/java/mandatory/test/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mandatory/test/HomeController.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/mandatory/test/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mandatory/test/Game.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/home.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/test.kotlin_module" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/mandatory/test/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mandatory/test/Game.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/home.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/test-classes/META-INF/test.kotlin_module" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/test-classes/mandatory/test/GameTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/mandatory/test/GameTest.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/test.iml" afterDir="false" />
+     </list>
+-    <ignored path="$PROJECT_DIR$/target/" />
+-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+     <option name="LAST_RESOLUTION" value="IGNORE" />
+-  </component>
+-  <component name="FileEditorManager">
+-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+-      <file pinned="false" current-in-tab="true">
+-        <entry file="file://$PROJECT_DIR$/src/test/java/mandatory/test/SeleniumTest.java">
+-          <provider selected="true" editor-type-id="text-editor">
+-            <state relative-caret-position="159">
+-              <caret line="589" lean-forward="true" selection-start-line="589" selection-end-line="589" />
+-            </state>
+-          </provider>
+-        </entry>
+-      </file>
+-      <file pinned="false" current-in-tab="false">
+-        <entry file="file://$PROJECT_DIR$/src/main/java/mandatory/test/HomeController.java">
+-          <provider selected="true" editor-type-id="text-editor">
+-            <state relative-caret-position="540">
+-              <caret line="54" column="9" selection-start-line="54" selection-start-column="9" selection-end-line="54" selection-end-column="9" />
+-            </state>
+-          </provider>
+-        </entry>
+-      </file>
+-      <file pinned="false" current-in-tab="false">
+-        <entry file="file://$PROJECT_DIR$/src/main/resources/templates/game.html">
+-          <provider selected="true" editor-type-id="text-editor">
+-            <state relative-caret-position="435">
+-              <caret line="29" column="35" selection-start-line="29" selection-start-column="29" selection-end-line="29" selection-end-column="35" />
+-              <folding>
+-                <element signature="n#style#0;n#p#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+-                <element signature="n#style#0;n#p#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+-                <element signature="n#style#0;n#h3#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+-              </folding>
+-            </state>
+-          </provider>
+-        </entry>
+-      </file>
+-      <file pinned="false" current-in-tab="false">
+-        <entry file="file://$PROJECT_DIR$/src/main/java/mandatory/test/Game.java">
+-          <provider selected="true" editor-type-id="text-editor">
+-            <state relative-caret-position="2190">
+-              <caret line="173" column="9" selection-start-line="173" selection-start-column="9" selection-end-line="173" selection-end-column="9" />
+-              <folding>
+-                <element signature="imports" expanded="true" />
+-                <element signature="e#1073#1074#0" expanded="true" />
+-                <element signature="e#1106#1107#0" expanded="true" />
+-              </folding>
+-            </state>
+-          </provider>
+-        </entry>
+-      </file>
+-      <file pinned="false" current-in-tab="false">
+-        <entry file="file://$PROJECT_DIR$/src/test/java/mandatory/test/GameTest.java">
+-          <provider selected="true" editor-type-id="text-editor">
+-            <state relative-caret-position="1365">
+-              <caret line="100" column="24" selection-start-line="100" selection-start-column="24" selection-end-line="100" selection-end-column="24" />
+-              <folding>
+-                <element signature="imports" expanded="true" />
+-                <element signature="e#614#615#0" expanded="true" />
+-                <element signature="e#647#648#0" expanded="true" />
+-              </folding>
+-            </state>
+-          </provider>
+-        </entry>
+-      </file>
+-      <file pinned="false" current-in-tab="false">
+-        <entry file="jar://$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-api/5.5.2/junit-jupiter-api-5.5.2.jar!/org/junit/jupiter/api/Assertions.class">
+-          <provider selected="true" editor-type-id="text-editor">
+-            <state relative-caret-position="21450">
+-              <caret line="1521" selection-start-line="1521" selection-end-line="1521" />
+-            </state>
+-          </provider>
+-        </entry>
+-      </file>
+-      <file pinned="false" current-in-tab="false">
+-        <entry file="jar://$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-api/5.5.2/junit-jupiter-api-5.5.2.jar!/org/junit/jupiter/api/AssertThrows.class">
+-          <provider selected="true" editor-type-id="text-editor">
+-            <state relative-caret-position="360">
+-              <caret line="30" selection-start-line="30" selection-end-line="30" />
+-            </state>
+-          </provider>
+-        </entry>
+-      </file>
+-      <file pinned="false" current-in-tab="false">
+-        <entry file="jar://$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-api/5.5.2/junit-jupiter-api-5.5.2.jar!/org/junit/jupiter/api/AssertTrue.class">
+-          <provider selected="true" editor-type-id="text-editor">
+-            <state relative-caret-position="210">
+-              <caret line="18" selection-start-line="18" selection-end-line="18" />
+-              <folding>
+-                <element signature="e#403#404#0" expanded="true" />
+-              </folding>
+-            </state>
+-          </provider>
+-        </entry>
+-      </file>
+-    </leaf>
+   </component>
+   <component name="FileTemplateManagerImpl">
+     <option name="RECENT_TEMPLATES">
+@@ -123,38 +37,7 @@
+   <component name="Git.Settings">
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
+-  <component name="IdeDocumentHistory">
+-    <option name="CHANGED_PATHS">
+-      <list>
+-        <option value="$PROJECT_DIR$/src/main/resources/templates/index.html" />
+-        <option value="$PROJECT_DIR$/src/main/java/mandatory/test/Purchase.java" />
+-        <option value="$PROJECT_DIR$/src/main/resources/static/home.css" />
+-        <option value="$PROJECT_DIR$/src/main/resources/templates/game1.html" />
+-        <option value="$PROJECT_DIR$/src/main/resources/static/css/home.css" />
+-        <option value="$PROJECT_DIR$/src/main/resources/static/css/game.css" />
+-        <option value="$PROJECT_DIR$/src/test/java/mandatory/test/PurchaseTest.java" />
+-        <option value="$PROJECT_DIR$/pom.xml" />
+-        <option value="$PROJECT_DIR$/src/test/java/mandatory/test/Case2Test.java" />
+-        <option value="$PROJECT_DIR$/src/test/java/mandatory/test/Case4Test.java" />
+-        <option value="$PROJECT_DIR$/src/test/java/mandatory/test/DataProvider.java" />
+-        <option value="$PROJECT_DIR$/src/test/java/mandatory/test/LC4Test.java" />
+-        <option value="$PROJECT_DIR$/src/test/java/mandatory/test/Case1Test.java" />
+-        <option value="$PROJECT_DIR$/src/test/java/mandatory/test/InvalidStartLifeTest.java" />
+-        <option value="$PROJECT_DIR$/src/main/resources/templates/home.html" />
+-        <option value="$PROJECT_DIR$/src/main/java/mandatory/test/HomeController.java" />
+-        <option value="$PROJECT_DIR$/src/main/java/mandatory/test/TestApplication.java" />
+-        <option value="$PROJECT_DIR$/src/main/java/mandatory/test/Game.java" />
+-        <option value="$PROJECT_DIR$/src/test/java/mandatory/test/GameTest.java" />
+-        <option value="$PROJECT_DIR$/src/main/resources/templates/game.html" />
+-        <option value="$PROJECT_DIR$/src/test/java/mandatory/test/SeleniumTest.java" />
+-      </list>
+-    </option>
+-  </component>
+-  <component name="ProjectFrameBounds">
+-    <option name="y" value="23" />
+-    <option name="width" value="1440" />
+-    <option name="height" value="877" />
+-  </component>
++  <component name="ProjectId" id="1croWl6zF08x0hTjNNEW9OYEkuN" />
+   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+     <ConfirmationsSetting value="1" id="Add" />
+   </component>
+@@ -296,18 +179,6 @@
+       <recent name="$PROJECT_DIR$/src/main/resources/static/css/css" />
+     </key>
+   </component>
+-  <component name="RunDashboard">
+-    <option name="ruleStates">
+-      <list>
+-        <RuleState>
+-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+-        </RuleState>
+-        <RuleState>
+-          <option name="name" value="StatusDashboardGroupingRule" />
+-        </RuleState>
+-      </list>
+-    </option>
+-  </component>
+   <component name="RunManager" selected="JUnit.SeleniumTest.setLifeToMax">
+     <configuration name="SeleniumTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+       <module name="test" />
+@@ -431,6 +302,8 @@
+       <workItem from="1590656640549" duration="10615000" />
+       <workItem from="1590738820634" duration="14586000" />
+       <workItem from="1590764092530" duration="980000" />
++      <workItem from="1591296116741" duration="28000" />
++      <workItem from="1591296210130" duration="49000" />
+     </task>
+     <servers />
+   </component>
+@@ -466,109 +339,15 @@
+       <configuration name="SeleniumTest.setLifeToMax" configurationId="JUnit" />
+     </history-entry>
+   </component>
+-  <component name="TimeTrackingManager">
+-    <option name="totallyTimeSpent" value="147284000" />
+-  </component>
+-  <component name="ToolWindowManager">
+-    <frame x="0" y="23" width="1440" height="877" extended-state="0" />
+-    <editor active="true" />
+-    <layout>
+-      <window_info content_ui="combo" id="Project" order="0" weight="0.19098713" />
+-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+-      <window_info id="Designer" order="2" />
+-      <window_info id="Image Layers" order="3" />
+-      <window_info id="Capture Tool" order="4" />
+-      <window_info id="UI Designer" order="5" />
+-      <window_info id="Favorites" order="6" side_tool="true" />
+-      <window_info id="Web" order="7" side_tool="true" />
+-      <window_info anchor="bottom" id="Message" order="0" />
+-      <window_info anchor="bottom" id="Find" order="1" weight="0.3299363" />
+-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.26496816" />
+-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+-      <window_info anchor="bottom" id="TODO" order="6" />
+-      <window_info anchor="bottom" id="SQL" order="7" />
+-      <window_info anchor="bottom" id="Spring" order="8" />
+-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.21528663" />
+-      <window_info anchor="bottom" id="Docker" order="10" show_stripe_button="false" />
+-      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
+-      <window_info anchor="bottom" id="Messages" order="12" weight="0.3299363" />
+-      <window_info anchor="bottom" id="Java Enterprise" order="13" />
+-      <window_info anchor="bottom" id="Database Changes" order="14" />
+-      <window_info anchor="bottom" id="Version Control" order="15" weight="0.3299363" />
+-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+-      <window_info anchor="right" id="Ant Build" order="1" weight="0.24926254" />
+-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+-      <window_info anchor="right" id="Maven" order="3" />
+-      <window_info anchor="right" id="Palette" order="4" />
+-      <window_info anchor="right" id="Capture Analysis" order="5" />
+-      <window_info anchor="right" id="Database" order="6" />
+-      <window_info anchor="right" id="Palette&#9;" order="7" />
+-      <window_info anchor="right" id="Theme Preview" order="8" />
+-      <window_info anchor="right" id="Bean Validation" order="9" />
+-    </layout>
+-    <layout-to-restore>
+-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19098713" />
+-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+-      <window_info id="Designer" order="2" />
+-      <window_info id="Image Layers" order="3" />
+-      <window_info id="Capture Tool" order="4" />
+-      <window_info id="UI Designer" order="5" />
+-      <window_info id="Favorites" order="6" side_tool="true" />
+-      <window_info id="Web" order="7" side_tool="true" />
+-      <window_info anchor="bottom" id="Message" order="0" />
+-      <window_info anchor="bottom" id="Find" order="1" weight="0.3299363" />
+-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.26496816" />
+-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+-      <window_info anchor="bottom" id="TODO" order="6" />
+-      <window_info anchor="bottom" id="SQL" order="7" />
+-      <window_info anchor="bottom" id="Spring" order="8" />
+-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.21528663" />
+-      <window_info anchor="bottom" id="Docker" order="10" show_stripe_button="false" />
+-      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
+-      <window_info anchor="bottom" id="Messages" order="12" weight="0.3299363" />
+-      <window_info anchor="bottom" id="Java Enterprise" order="13" />
+-      <window_info anchor="bottom" id="Database Changes" order="14" />
+-      <window_info anchor="bottom" id="Version Control" order="15" weight="0.3299363" />
+-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+-      <window_info anchor="right" id="Ant Build" order="1" weight="0.24926254" />
+-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+-      <window_info anchor="right" id="Maven" order="3" />
+-      <window_info anchor="right" id="Palette" order="4" />
+-      <window_info anchor="right" id="Capture Analysis" order="5" />
+-      <window_info anchor="right" id="Database" order="6" />
+-      <window_info anchor="right" id="Palette&#9;" order="7" />
+-      <window_info anchor="right" id="Theme Preview" order="8" />
+-      <window_info anchor="right" id="Bean Validation" order="9" />
+-    </layout-to-restore>
+-  </component>
+   <component name="TypeScriptGeneratedFilesManager">
+-    <option name="version" value="1" />
++    <option name="version" value="2" />
+   </component>
+   <component name="Vcs.Log.Tabs.Properties">
+     <option name="TAB_STATES">
+       <map>
+         <entry key="MAIN">
+           <value>
+-            <State>
+-              <option name="RECENTLY_FILTERED_USER_GROUPS">
+-                <collection />
+-              </option>
+-              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+-                <collection />
+-              </option>
+-              <option name="COLUMN_ORDER">
+-                <list>
+-                  <option value="0" />
+-                  <option value="1" />
+-                  <option value="2" />
+-                  <option value="3" />
+-                </list>
+-              </option>
+-            </State>
++            <State />
+           </value>
+         </entry>
+       </map>
+@@ -587,167 +366,26 @@
+         </entry>
+       </map>
+     </option>
++    <option name="oldMeFiltersMigrated" value="true" />
+   </component>
+   <component name="VcsManagerConfiguration">
+     <ignored-roots>
+       <path value="$PROJECT_DIR$" />
+     </ignored-roots>
+   </component>
++  <component name="WindowStateProjectService">
++    <state x="552" y="161" key="#Plugins" timestamp="1591296257653">
++      <screen x="0" y="0" width="1920" height="1040" />
++    </state>
++    <state x="552" y="161" key="#Plugins/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591296257653" />
++    <state x="640" y="256" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1591296124561">
++      <screen x="0" y="0" width="1920" height="1040" />
++    </state>
++    <state x="640" y="256" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591296124561" />
++  </component>
+   <component name="antWorkspaceConfiguration">
+     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+     <option name="FILTER_TARGETS" value="false" />
+-  </component>
+-  <component name="editorHistoryManager">
+-    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+-      <provider selected="true" editor-type-id="text-editor" />
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/src/main/resources/static/img/life_counter.png">
+-      <provider selected="true" editor-type-id="images" />
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/src/main/resources/static/img/background_MTG.png">
+-      <provider selected="true" editor-type-id="images" />
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/src/test/java/mandatory/test/PurchaseTest.java" />
+-    <entry file="file://$PROJECT_DIR$/src/main/java/mandatory/test/Purchase.java" />
+-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/index.html" />
+-    <entry file="file://$PROJECT_DIR$/src/main/resources/static/css/game.css">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="343">
+-          <caret line="44" selection-start-line="44" selection-end-line="44" />
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/game1.html" />
+-    <entry file="file://$PROJECT_DIR$/test.iml">
+-      <provider selected="true" editor-type-id="text-editor" />
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/src/main/resources/static/css/home.css">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="60">
+-          <caret line="4" column="22" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="22" />
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/pom.xml">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="420">
+-          <caret line="28" selection-start-line="28" selection-end-line="28" />
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/src/test/java/mandatory/test/Case2Test.java" />
+-    <entry file="file://$PROJECT_DIR$/src/test/java/mandatory/test/Case4Test.java" />
+-    <entry file="file://$PROJECT_DIR$/src/test/java/mandatory/test/Case6Test.java" />
+-    <entry file="file://$PROJECT_DIR$/src/test/java/mandatory/test/LC3Test.java" />
+-    <entry file="file://$PROJECT_DIR$/src/test/java/mandatory/test/LC7Test.java" />
+-    <entry file="file://$PROJECT_DIR$/src/test/java/mandatory/test/LC8Test.java" />
+-    <entry file="file://$PROJECT_DIR$/src/test/java/mandatory/test/LC10Test.java" />
+-    <entry file="file://$PROJECT_DIR$/src/test/java/mandatory/test/LC11Test.java" />
+-    <entry file="file://$PROJECT_DIR$/src/test/java/mandatory/test/LC4Test.java" />
+-    <entry file="file://$PROJECT_DIR$/src/test/java/mandatory/test/DataProvider.java" />
+-    <entry file="file://$PROJECT_DIR$/src/test/java/mandatory/test/LC9Test.java" />
+-    <entry file="file://$PROJECT_DIR$/src/test/java/mandatory/test/DiceTest.java" />
+-    <entry file="file://$PROJECT_DIR$/src/test/java/mandatory/test/InvalidStartLifeTest.java">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="562">
+-          <caret line="79" column="32" selection-start-line="79" selection-start-column="32" selection-end-line="79" selection-end-column="32" />
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/home.html">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="270">
+-          <caret line="66" column="79" selection-start-line="66" selection-start-column="23" selection-end-line="66" selection-end-column="79" />
+-          <folding>
+-            <element signature="n#style#0;n#input#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+-          </folding>
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/src/main/java/mandatory/test/TestApplication.java">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="60">
+-          <caret line="4" selection-start-line="4" selection-end-line="4" />
+-          <folding>
+-            <element signature="imports" expanded="true" />
+-          </folding>
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/src/test/java/mandatory/test/SeleniumTest.java">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="159">
+-          <caret line="589" lean-forward="true" selection-start-line="589" selection-end-line="589" />
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/src/main/java/mandatory/test/HomeController.java">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="540">
+-          <caret line="54" column="9" selection-start-line="54" selection-start-column="9" selection-end-line="54" selection-end-column="9" />
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/game.html">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="435">
+-          <caret line="29" column="35" selection-start-line="29" selection-start-column="29" selection-end-line="29" selection-end-column="35" />
+-          <folding>
+-            <element signature="n#style#0;n#p#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+-            <element signature="n#style#0;n#p#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+-            <element signature="n#style#0;n#h3#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+-          </folding>
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/src/main/java/mandatory/test/Game.java">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="2190">
+-          <caret line="173" column="9" selection-start-line="173" selection-start-column="9" selection-end-line="173" selection-end-column="9" />
+-          <folding>
+-            <element signature="imports" expanded="true" />
+-            <element signature="e#1073#1074#0" expanded="true" />
+-            <element signature="e#1106#1107#0" expanded="true" />
+-          </folding>
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="file://$PROJECT_DIR$/src/test/java/mandatory/test/GameTest.java">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="1365">
+-          <caret line="100" column="24" selection-start-line="100" selection-start-column="24" selection-end-line="100" selection-end-column="24" />
+-          <folding>
+-            <element signature="imports" expanded="true" />
+-            <element signature="e#614#615#0" expanded="true" />
+-            <element signature="e#647#648#0" expanded="true" />
+-          </folding>
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="jar://$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-api/5.5.2/junit-jupiter-api-5.5.2.jar!/org/junit/jupiter/api/Assertions.class">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="21450">
+-          <caret line="1521" selection-start-line="1521" selection-end-line="1521" />
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="jar://$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-api/5.5.2/junit-jupiter-api-5.5.2.jar!/org/junit/jupiter/api/AssertThrows.class">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="360">
+-          <caret line="30" selection-start-line="30" selection-end-line="30" />
+-        </state>
+-      </provider>
+-    </entry>
+-    <entry file="jar://$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-api/5.5.2/junit-jupiter-api-5.5.2.jar!/org/junit/jupiter/api/AssertTrue.class">
+-      <provider selected="true" editor-type-id="text-editor">
+-        <state relative-caret-position="210">
+-          <caret line="18" selection-start-line="18" selection-end-line="18" />
+-          <folding>
+-            <element signature="e#403#404#0" expanded="true" />
+-          </folding>
+-        </state>
+-      </provider>
+-    </entry>
+   </component>
+   <component name="masterDetails">
+     <states>
