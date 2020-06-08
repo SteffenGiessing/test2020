@@ -2,15 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e805153b-1fee-4fcc-aa70-1e81437711d1" name="Default Changelist" comment="Moving to own github">
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_29_05_2020_14_05_[Default_Changelist]/Game.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_29_05_2020_14_05_[Default_Changelist]/GameTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_29_05_2020_14_05_[Default_Changelist]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_29_05_2020_14_05__Default_Changelist_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_29_05_2020_17_15_[Default_Changelist]/Game.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_29_05_2020_17_15_[Default_Changelist]/GameTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_29_05_2020_17_15_[Default_Changelist]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_29_05_2020_17_15__Default_Changelist_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/test.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mandatory/test/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mandatory/test/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/mandatory/test/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mandatory/test/Game.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/META-INF/test.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/test.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/mandatory/test/SeleniumTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/mandatory/test/SeleniumTest.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,11 +38,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="y" value="23" />
-    <option name="width" value="1440" />
-    <option name="height" value="877" />
-  </component>
+  <component name="ProjectId" id="1crsZTwuSiv1wTBs5nAO4hsoRZm" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="1" id="Add" />
   </component>
@@ -53,11 +52,14 @@
     <property name="RequestMappingsPanelOrder1" value="1" />
     <property name="RequestMappingsPanelWidth0" value="75" />
     <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1591013841793" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -78,7 +80,7 @@
       <recent name="$PROJECT_DIR$/src/main/resources/static/css/css" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.SeleniumTest">
+  <component name="RunManager" selected="JUnit.GameUnitTest.addLifeIncrement">
     <configuration name="GameUnitTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="test" />
       <extension name="coverage">
@@ -94,6 +96,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="GameUnitTest.addLifeIncrement" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="mandatory.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="mandatory.test" />
+      <option name="MAIN_CLASS_NAME" value="mandatory.test.GameUnitTest" />
+      <option name="METHOD_NAME" value="addLifeIncrement" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="SeleniumTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="test" />
       <extension name="coverage">
@@ -105,22 +123,6 @@
       <option name="PACKAGE_NAME" value="mandatory.test" />
       <option name="MAIN_CLASS_NAME" value="mandatory.test.SeleniumTest" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SeleniumTest.dice" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="mandatory.test.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="mandatory.test" />
-      <option name="MAIN_CLASS_NAME" value="mandatory.test.SeleniumTest" />
-      <option name="METHOD_NAME" value="dice" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -166,11 +168,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.GameUnitTest.addLifeIncrement" />
         <item itemvalue="JUnit.SeleniumTest" />
         <item itemvalue="JUnit.GameUnitTest" />
         <item itemvalue="JUnit.SeleniumTest.setLifeToMax" />
         <item itemvalue="JUnit.SeleniumTest.plusLife" />
-        <item itemvalue="JUnit.SeleniumTest.dice" />
       </list>
     </recent_temporary>
   </component>
@@ -201,11 +203,17 @@
       <workItem from="1590738820634" duration="14586000" />
       <workItem from="1590764092530" duration="2245000" />
       <workItem from="1591006754587" duration="1849000" />
+      <workItem from="1591298103176" duration="763000" />
+      <workItem from="1591349674773" duration="212000" />
+      <workItem from="1591349897329" duration="2093000" />
+      <workItem from="1591448217238" duration="825000" />
+      <workItem from="1591462980783" duration="211000" />
+      <workItem from="1591610382420" duration="676000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -243,22 +251,58 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="585" y="88" key="CommitChangelistDialog2/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591296616584" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1591296636822">
+    <state x="838" y="418" key="Github.ShareDialog" timestamp="1591350528226">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591296636822" />
-    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1591296357612">
+    <state x="838" y="418" key="Github.ShareDialog/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591350528226" />
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1591610452875">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591296357612" />
-    <state x="765" y="381" key="git4idea.rebase.GitRebaseDialog" timestamp="1591296488143">
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591610452875" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1591610452874">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="765" y="381" key="git4idea.rebase.GitRebaseDialog/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591296488143" />
-    <state x="760" y="421" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1591296580770">
+    <state width="1877" height="282" key="GridCell.Tab.0.center/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591610452874" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1591610452874">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="760" y="421" key="git4idea.remote.GitConfigureRemotesDialog/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591296580770" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591610452874" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1591610452874">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.right/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591610452874" />
+    <state width="1877" height="282" key="GridCell.Tab.1.bottom" timestamp="1591610452875">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.1.bottom/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591610452875" />
+    <state width="1877" height="282" key="GridCell.Tab.1.center" timestamp="1591610452875">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.1.center/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591610452875" />
+    <state width="1877" height="282" key="GridCell.Tab.1.left" timestamp="1591610452875">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.1.left/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591610452875" />
+    <state width="1877" height="282" key="GridCell.Tab.1.right" timestamp="1591610452875">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.1.right/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591610452875" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1591349957071">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591349957071" />
+    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1591463018624">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591463018624" />
+    <state x="765" y="381" width="498" height="277" key="git4idea.rebase.GitRebaseDialog" timestamp="1591350461286">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="765" y="381" width="498" height="277" key="git4idea.rebase.GitRebaseDialog/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591350461286" />
+    <state x="760" y="421" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1591349949798">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="760" y="421" key="git4idea.remote.GitConfigureRemotesDialog/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591349949798" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
