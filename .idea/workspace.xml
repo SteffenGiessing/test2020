@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e805153b-1fee-4fcc-aa70-1e81437711d1" name="Default Changelist" comment="Moving to own github">
+    <list default="true" id="e805153b-1fee-4fcc-aa70-1e81437711d1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/mandatory/test/SeleniumTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/mandatory/test/SeleniumTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/mandatory/test/SeleniumTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/mandatory/test/SeleniumTest.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -71,7 +70,7 @@
       <recent name="$PROJECT_DIR$/src/main/resources/static/css/css" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.SeleniumTest.validPlayers">
+  <component name="RunManager" selected="Spring Boot.TestApplication">
     <configuration name="GameUnitTest.addLifeIncrement" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="test" />
       <extension name="coverage">
@@ -203,6 +202,7 @@
       <workItem from="1591610382420" duration="1490000" />
       <workItem from="1591688156637" duration="3388000" />
       <workItem from="1591692905139" duration="3800000" />
+      <workItem from="1591771598134" duration="307000" />
     </task>
     <task id="LOCAL-00001" summary="Moving to own github">
       <created>1591611071285</created>
@@ -211,7 +211,14 @@
       <option name="project" value="LOCAL" />
       <updated>1591611071285</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Tjekking push works before exam">
+      <created>1591771639595</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1591771639595</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -248,33 +255,34 @@
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
     <MESSAGE value="Moving to own github" />
-    <option name="LAST_COMMIT_MESSAGE" value="Moving to own github" />
+    <MESSAGE value="Tjekking push works before exam" />
+    <option name="LAST_COMMIT_MESSAGE" value="Tjekking push works before exam" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="585" y="88" key="CommitChangelistDialog2" timestamp="1591693482204">
+    <state x="585" y="88" key="CommitChangelistDialog2" timestamp="1591771638970">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="585" y="88" key="CommitChangelistDialog2/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591693482204" />
+    <state x="585" y="88" key="CommitChangelistDialog2/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591771638970" />
     <state x="838" y="418" key="Github.ShareDialog" timestamp="1591350528226">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="838" y="418" key="Github.ShareDialog/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591350528226" />
-    <state width="1858" height="277" key="GridCell.Tab.0.bottom" timestamp="1591725290699">
+    <state width="1858" height="277" key="GridCell.Tab.0.bottom" timestamp="1591771868489">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1858" height="277" key="GridCell.Tab.0.bottom/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591725290699" />
-    <state width="1858" height="277" key="GridCell.Tab.0.center" timestamp="1591725290698">
+    <state width="1858" height="277" key="GridCell.Tab.0.bottom/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591771868489" />
+    <state width="1858" height="277" key="GridCell.Tab.0.center" timestamp="1591771868489">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1858" height="277" key="GridCell.Tab.0.center/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591725290698" />
-    <state width="1858" height="277" key="GridCell.Tab.0.left" timestamp="1591725290698">
+    <state width="1858" height="277" key="GridCell.Tab.0.center/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591771868489" />
+    <state width="1858" height="277" key="GridCell.Tab.0.left" timestamp="1591771868489">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1858" height="277" key="GridCell.Tab.0.left/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591725290698" />
-    <state width="1858" height="277" key="GridCell.Tab.0.right" timestamp="1591725290699">
+    <state width="1858" height="277" key="GridCell.Tab.0.left/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591771868489" />
+    <state width="1858" height="277" key="GridCell.Tab.0.right" timestamp="1591771868489">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1858" height="277" key="GridCell.Tab.0.right/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591725290699" />
+    <state width="1858" height="277" key="GridCell.Tab.0.right/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591771868489" />
     <state width="1860" height="277" key="GridCell.Tab.1.bottom" timestamp="1591725290677">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -291,14 +299,14 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1860" height="277" key="GridCell.Tab.1.right/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591725290677" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1591611080739">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1591771648076">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591611080739" />
-    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1591463018624">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591771648076" />
+    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1591771619375">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591463018624" />
+    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1591771619375" />
     <state x="765" y="381" width="498" height="277" key="git4idea.rebase.GitRebaseDialog" timestamp="1591350461286">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

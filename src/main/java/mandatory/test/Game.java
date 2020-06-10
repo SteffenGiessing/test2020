@@ -192,7 +192,6 @@ public class Game {
                 }
             }
         }
-        //Tjekking push working before exam
         System.out.println(playerLife);
         System.out.println(player + ": " + life);
         return life;
