@@ -22,7 +22,7 @@ public class SeleniumTest {
 
   @Before
   public void setUp() {
-    //driver = new ChromeDriver();
+   // driver = new ChromeDriver();
     js = (JavascriptExecutor) driver;
     vars = new HashMap<String, Object>();
     DesiredCapabilities dc = new DesiredCapabilities();
