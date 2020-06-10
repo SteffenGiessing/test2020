@@ -209,7 +209,7 @@ public class Game {
     }
 
     public int rollDice(int playerAmount){
-
+        //Pushing to check that it works
         Random random = new Random();
         int min = 1;
         int max = playerAmount;
